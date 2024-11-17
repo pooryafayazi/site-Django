@@ -1,10 +1,13 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse
 
-def http_test(request):
-    return HttpResponse('<h1>http_test OK!</h1>')
+def index_view(request):
+    return HttpResponse('<h1>Home Page</h1>')
 
-def json_test(request):
-    return JsonResponse({"brand": "Ford",  "model": "Mustang",  "year": 1964})
+def about_view(request):
+    return HttpResponse('<h1>about Page</h1>')
+
+def contact_view(request):
+    return HttpResponse('<h1>contact Page</h1>')
