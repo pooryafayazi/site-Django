@@ -22,5 +22,5 @@ from wesite1.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('wesite1/', include('wesite1.urls')),
+    path('', include('wesite1.urls')),
 ]
