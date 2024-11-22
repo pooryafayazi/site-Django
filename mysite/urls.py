@@ -29,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path ( 'url adress' , 'view' )
     path('', include('wesite1.urls')),
+    path('blog/', include('blog.urls')),
 ] 
 
 # static ('static','base / static')
