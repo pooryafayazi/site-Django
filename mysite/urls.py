@@ -20,7 +20,17 @@ from django.urls import path , include
 from wesite1.views import *
 #from .views import http_test, json_test
 
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path ( 'url adress' , 'view' )
     path('', include('wesite1.urls')),
-]
+] 
+
+# static ('static','base / static')
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
