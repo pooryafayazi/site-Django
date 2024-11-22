@@ -6,6 +6,6 @@ from wesite1.views import *
 
 urlpatterns = [
     path('', index_view ),
-    path('about', about_view ),
-    path('contact', contact_view )
+    path('about.html', about_view ),
+    path('contact.html', contact_view )
 ]
