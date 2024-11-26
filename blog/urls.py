@@ -2,12 +2,12 @@
 from django.urls import path
 
 from blog.views import *
-#from .views import http_test, json_test
 
 app_name = 'blog'
 
 urlpatterns = [
     path('', blog_view ,name='index'),
-    path('single', blog_single ,name='single'),
-
+    path('single_', blog_single_ ,name='single_'),
+    path('single/<str:post_title>/', blog_single ,name='single'),
+    path('test',test ,name='test'),
 ]
