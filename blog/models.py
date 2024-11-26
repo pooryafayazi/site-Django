@@ -12,6 +12,9 @@ class Post(models.Model):
     published_date = models.DateTimeField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-
+    class Meta:
+        ordering = ('-created_date',)
+        #verbose_name = "پست"
+        #verbose_name_plural = "پست ها"
     def __str__(self):
         return f'{self.title} - {self.id}'
