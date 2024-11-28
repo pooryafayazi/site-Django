@@ -4,7 +4,7 @@ from django.utils import timezone
 # Create your views here.
 
 def index_view(request):
-    posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())
+    posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())[:6]
     context = {'posts': posts}
     return render(request, 'wesite1/index.html',context)
 
