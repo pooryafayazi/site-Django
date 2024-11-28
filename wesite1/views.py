@@ -1,10 +1,12 @@
 from django.shortcuts import render
-
+from blog.models import Post
+from django.utils import timezone
 # Create your views here.
-from django.http import HttpResponse
 
 def index_view(request):
-    return render(request, 'wesite1/index.html')
+    posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())
+    context = {'posts': posts}
+    return render(request, 'wesite1/index.html',context)
 
 def about_view(request):
     return render(request, 'wesite1/about.html')
