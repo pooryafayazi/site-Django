@@ -126,13 +126,12 @@
 							output.
 						</p>
 						<div id="mc_embed_signup">
-							<form target="_blank"
-								action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-								method="get" class="subscription relative">
+							<form action="{% url 'wesite1:newsletter' %}" method="post" class="subscription relative">
+								{% csrf_token %}
 								<div class="input-group d-flex flex-row">
-									<input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
+									<input name="email" placeholder="Email Address" onfocus="this.placeholder = ''"
 										onblur="this.placeholder = 'Email Address '" required="" type="email">
-									<button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
+									<button class="btn bb-btn" type="submit"><span class="lnr lnr-location"></span></button>
 								</div>
 								<div class="mt-10 info"></div>
 							</form>
@@ -175,3 +174,30 @@
 		</div>
 	</footer>
 	<!-- End footer Area -->
+
+	
+			<!-- Pop-up Notification -->
+			<div id="notification" class="alert alert-success" style="display:none;">
+				<span id="notification-message"></span>
+			</div>
+			
+			{% if message and message|length > 0 %}
+
+			<script>
+				function showNotification(message) {
+					document.getElementById('notification-message').innerText = message;
+					document.getElementById('notification').style.display = 'block';
+					setTimeout(function() {
+						document.getElementById('notification').style.display = 'none';
+					}, 3000);  
+				}			
+				
+ 
+			showNotification("{{ message|escapejs }}");
+			</script>
+			{% else %}
+			<script>
+			console.log("the message has already been EMPTY!");
+			</script>
+			{% endif %}
+			
