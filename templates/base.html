@@ -32,14 +32,13 @@
 	<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
 	<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
 	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
-	<link rel="stylesheet" href="{% static 'css/main.css' %}">
-
-	
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">	
 </head>
 
-<body>
+<body>	  
 	<header id="header">
 		<div class="header-top">
+
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-lg-6 col-sm-6 col-6 header-top-left">
@@ -82,8 +81,7 @@
 
     <!-- start footer Area -->
 	<footer class="footer-area section-gap">
-		<div class="container">
-
+		<div class="container">			
 			<div class="row">
 				<div class="col-lg-3  col-md-6 col-sm-6">
 					<div class="single-footer-widget">
@@ -94,7 +92,7 @@
 							has come to a point
 						</p>
 					</div>
-				</div>
+				</div>				
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
 						<h6>Navigation Links</h6>
@@ -136,6 +134,17 @@
 								<div class="mt-10 info"></div>
 							</form>
 						</div>
+						<!-- Pop-up Notification -->
+							{% if messages %}              
+								{% for message in messages %}
+									<script>
+										window.onload = function() {							
+												alert("{{ message }}");							
+											};
+									</script>
+								{% endfor %}
+							{% endif %}
+
 					</div>
 				</div>
 				<div class="col-lg-3  col-md-6 col-sm-6">
@@ -174,30 +183,3 @@
 		</div>
 	</footer>
 	<!-- End footer Area -->
-
-	
-			<!-- Pop-up Notification -->
-			<div id="notification" class="alert alert-success" style="display:none;">
-				<span id="notification-message"></span>
-			</div>
-			
-			{% if message and message|length > 0 %}
-
-			<script>
-				function showNotification(message) {
-					document.getElementById('notification-message').innerText = message;
-					document.getElementById('notification').style.display = 'block';
-					setTimeout(function() {
-						document.getElementById('notification').style.display = 'none';
-					}, 3000);  
-				}			
-				
- 
-			showNotification("{{ message|escapejs }}");
-			</script>
-			{% else %}
-			<script>
-			console.log("the message has already been EMPTY!");
-			</script>
-			{% endif %}
-			

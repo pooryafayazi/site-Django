@@ -1,5 +1,5 @@
-from django.shortcuts import render,HttpResponseRedirect
-
+from django.shortcuts import render,HttpResponseRedirect,redirect
+from django.contrib import messages
 from wesite1.forms import ContactForm,NewsLetterForm
 # Create your views here.
 
@@ -16,10 +16,13 @@ def contact_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             contact = form.save(commit=False)
-            contact.name = None
+            contact.name = 'Unknown'
             contact.save()
-            message = "your data is saved correctly"
-            return render(request, 'wesite1/contact.html', {'form':form ,'message':message})
+            messages.add_message(request, messages.SUCCESS ,"Your data is saved correctly") 
+            return render(request, 'wesite1/contact.html', {'form':form })
+        else:
+            messages.add_message(request, messages.ERROR, "Your data is NOT saved!") 
+
     else:
         form = ContactForm()
     return render(request, 'wesite1/contact.html')
@@ -30,6 +33,10 @@ def newsletter_view(request):
         form = NewsLetterForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS ,"Your email is saved successfully")
             return HttpResponseRedirect('/')
+        else:
+            return render(request, 'wesite1/index.html', {'form': form}) 
     else:
-         HttpResponseRedirect('/')
+        form = NewsLetterForm() 
+        return render(request, 'wesite1/index.html', {'form': form})
