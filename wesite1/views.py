@@ -30,6 +30,6 @@ def newsletter_view(request):
         form = NewsLetterForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect('/')
     else:
-         HttpResponseRedirect("/")
+         HttpResponseRedirect('/')
