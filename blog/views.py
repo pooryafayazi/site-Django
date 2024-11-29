@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from blog.models import Post
 from django.utils import timezone
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-#def blog_view(request,**kwargs):
+#def blog_view(request,**kwargs): 
 def blog_view(request,cat_name=None,author_username=None):
     posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())
     #if kwargs.get('cat_name') is not None:

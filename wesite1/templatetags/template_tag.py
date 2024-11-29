@@ -2,7 +2,7 @@ from django import template
 
 register = template.Library()
 
-
+from django.utils import timezone
 from blog.models import Post
 
 
@@ -16,5 +16,5 @@ def truncate_w(text, word_count):
 
 @register.inclusion_tag('wesite1/least-post.html')
 def least():
-    posts = Post.objects.filter(status=1).order_by('-published_date')[:6]    
+    posts = Post.objects.filter(status=1, published_date__lte=timezone.now()).order_by('-published_date')[:6]    
     return {'posts' : posts}
