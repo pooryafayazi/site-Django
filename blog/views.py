@@ -27,7 +27,7 @@ def blog_single(request, post_id):
     current_post.counted_views += 1
     current_post.save()
 
-    all_posts = Post.objects.all().order_by('published_date').filter(status=1)
+    all_posts = Post.objects.all().order_by('published_date').filter(status=1, published_date__lte=timezone.now())
     current_index = list(all_posts).index(current_post)
     previous_post = all_posts[current_index - 1] if current_index > 0 else None
     next_post = all_posts[current_index + 1] if current_index < len(all_posts) - 1 else None
