@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load template_tag %}
 {% block content %}
 
 	<!-- start banner Area -->
@@ -178,7 +178,7 @@
 			<div class="row">
 				<div class="active-recent-blog-carusel">
 
-					{% include 'wesite1/least-post.html' %}
+					{% least %}
 
 				</div>
 			</div>
