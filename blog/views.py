@@ -2,14 +2,18 @@ from django.shortcuts import render, get_object_or_404
 from blog.models import Post
 from django.utils import timezone
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-#def blog_view(request,**kwargs): 
-def blog_view(request,cat_name=None,author_username=None):
+def blog_view(request,**kwargs): 
+#def blog_view(request,cat_name=None,author_username=None):
     posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())
-    #if kwargs.get('cat_name') is not None:
-    if cat_name:
-        posts = posts.filter(category__name=cat_name)
-    if author_username:
-        posts = posts.filter(author__username =author_username)
+    if kwargs.get('cat_name') is not None:
+    #if cat_name:
+        posts = posts.filter(category__name=kwargs['cat_name'])
+    if kwargs.get('author_username') is not None:
+    #if author_username:
+        posts = posts.filter(author__username =kwargs['author_username'])
+    if kwargs.get('tag_name') is not None:
+    #if tag_name:
+        posts = posts.filter(tags__name=kwargs['tag_name'])
     posts = Paginator(posts,3)
     try:        
         page_number = request.GET.get('page')

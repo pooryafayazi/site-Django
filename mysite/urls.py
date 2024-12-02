@@ -24,14 +24,28 @@ from wesite1.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.contrib.sitemaps.views import sitemap
 
+from wesite1.sitemaps import StaticViewSitemap
+from blog.sitemaps import BlogSitemap
+
+from debug_toolbar.toolbar import debug_toolbar_urls
+
+
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    'blog' : BlogSitemap,
+}
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path ( 'url adress' , 'view' )
     path('', include('wesite1.urls')),
     path('blog/', include('blog.urls', namespace='blog')),
+    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",),
+    path('robots.txt', include('robots.urls')),
 ] 
-
+urlpatterns += debug_toolbar_urls()
 # static ('static','base / static')
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
