@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'robots',
     "debug_toolbar",
     "taggit",
+    'captcha',
 
 
     'wesite1.apps.Wesite1Config', # or 'wesite1'

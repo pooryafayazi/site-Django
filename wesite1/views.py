@@ -21,11 +21,11 @@ def contact_view(request):
             messages.add_message(request, messages.SUCCESS ,"Your data is saved correctly") 
             return render(request, 'wesite1/contact.html', {'form':form })
         else:
-            messages.add_message(request, messages.ERROR, "Your data is NOT saved!") 
+            messages.add_message(request, messages.ERROR, "Your data is NOT saved!", {'form':form }) 
 
     else:
         form = ContactForm()
-    return render(request, 'wesite1/contact.html')
+    return render(request, 'wesite1/contact.html', {'form':form })
 
 
 def newsletter_view(request):
