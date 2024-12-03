@@ -44,6 +44,7 @@ urlpatterns = [
     path('blog/', include('blog.urls', namespace='blog')),
     path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",),
     path('robots.txt', include('robots.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ] 
 urlpatterns += debug_toolbar_urls()
 # static ('static','base / static')
