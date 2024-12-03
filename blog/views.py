@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from blog.models import Post,Comment
 from django.utils import timezone
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from blog.forms import CommentForm
+from django.contrib import messages
+
 def blog_view(request,**kwargs): 
 #def blog_view(request,cat_name=None,author_username=None):
     posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())
@@ -31,6 +34,16 @@ def blog_view(request,**kwargs):
 
 
 def blog_single(request, post_id):
+    if request.method == 'POST':
+        current_post = get_object_or_404(Post,status=1, id = post_id) 
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Your comment is saved!")
+        else:
+            messages.add_message(request, messages.ERROR, "Your comment is NOT saved!")
+
+    
     current_post = get_object_or_404(Post,status=1, id = post_id)    
     current_post.counted_views += 1
     current_post.save()
@@ -40,11 +53,13 @@ def blog_single(request, post_id):
     current_index = list(all_posts).index(current_post)
     previous_post = all_posts[current_index - 1] if current_index > 0 else None
     next_post = all_posts[current_index + 1] if current_index < len(all_posts) - 1 else None
+    form = CommentForm()
     context = {
         'current_post': current_post,
         'previous_post': previous_post,
         'next_post': next_post,
-        'comments' : comments
+        'comments' : comments,
+        'form' : form,
     }
     
     return render(request, 'blog/blog-single.html', context)
