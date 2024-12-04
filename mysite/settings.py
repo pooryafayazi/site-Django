@@ -47,8 +47,10 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "taggit",
     'captcha',
-
-
+    
+    
+    
+    'accounts',
     'wesite1.apps.Wesite1Config', # or 'wesite1'
     'blog',
 ]
