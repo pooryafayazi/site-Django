@@ -1,9 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from blog.models import Post,Comment
 from django.utils import timezone
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from blog.forms import CommentForm
 from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
 
 def blog_view(request,**kwargs): 
 #def blog_view(request,cat_name=None,author_username=None):
@@ -48,11 +53,12 @@ def blog_single(request, post_id):
     current_post.counted_views += 1
     current_post.save()
 
-    comments = Comment.objects.filter(post_id =current_post.id,approved=True)
     all_posts = Post.objects.all().order_by('published_date').filter(status=1, published_date__lte=timezone.now())
     current_index = list(all_posts).index(current_post)
     previous_post = all_posts[current_index - 1] if current_index > 0 else None
     next_post = all_posts[current_index + 1] if current_index < len(all_posts) - 1 else None
+    comments = Comment.objects.filter(post_id =current_post.id,approved=True)
+
     form = CommentForm()
     context = {
         'current_post': current_post,
@@ -61,9 +67,14 @@ def blog_single(request, post_id):
         'comments' : comments,
         'form' : form,
     }
-    
-    return render(request, 'blog/blog-single.html', context)
-
+    if not current_post.login_require:        
+        return render(request, 'blog/blog-single.html', context)
+    else:
+        if not request.user.is_authenticated:         
+            return HttpResponseRedirect(reverse('accounts:login'))
+        else:
+            return render(request, 'blog/blog-single.html', context)
+        
 
 def blog_search(request):
     posts = Post.objects.filter(status=1 , published_date__lte=timezone.now())  

@@ -10,7 +10,7 @@ class PostAdmin (SummernoteModelAdmin):
     empty_value_display = "-empty-"
     #fields = [ "title"]
     #exclude = ["birth_date"]
-    list_display = ["title","author", "status",'published_date',"created_date"]
+    list_display = ["title","author", "status",'login_require','published_date',"created_date"]
     list_filter =  ["status",'published_date',"author",]
     #ordering = ['-created_date']
     search_fields = ["title", "'content"]
