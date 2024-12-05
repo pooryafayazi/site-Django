@@ -4,6 +4,10 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 # Create your views here.
+
+
+from django.contrib import messages
+
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -12,21 +16,23 @@ def login_view(request):
             try:
                 user = User.objects.get(email=username_or_email)
                 username = user.username
-            except:
+            except User.DoesNotExist:
                 username = username_or_email
+            
             user = authenticate(username=username, password=password)
 
-            form = AuthenticationForm(request=request, data=request.POST)
             if user is not None:
                 login(request, user)
+                messages.success(request, 'You have successfully logged in.')
                 return redirect('/')
+            else:
+                messages.error(request, 'Invalid username or password.')
+
         form = AuthenticationForm()
         context = {'form': form}
         return render(request, 'accounts/login.html', context)
     else:
         return redirect('/')
-
-
 
 def logout_view(request):
     if request.user.is_authenticated:
@@ -35,21 +41,6 @@ def logout_view(request):
         return render(request, 'accounts/login.html' ) 
     return redirect('/')
 
-'''
-def signup_view(request):
-    if not request.user.is_authenticated:
-        if request.method == 'POST':
-            form = CustomUserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('/')
-        else:
-            form = UserCreationForm()
-        context = {'form': form}
-        return render(request, 'accounts/signup.html', context)
-    else:
-        return redirect('/')
-'''
 
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
