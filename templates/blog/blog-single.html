@@ -3,6 +3,8 @@
 {% load custom_filters %}
 {% load humanize %}
 
+
+{% block author %} {{current_post.author.get_full_name}} - blog's author {% endblock %}
 {% block description %} {{current_post.content|truncate_w:50|safe}} Read more about this destination and get inspired for your next adventure! {% endblock %}
 {% block title %} {{ current_post.title }} - Travel Blog {% endblock %}
 

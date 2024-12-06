@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    'wesite1.middleware.RedirectToComingSoonMiddleware',
+    #'wesite1.middleware.RedirectToComingSoonMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
