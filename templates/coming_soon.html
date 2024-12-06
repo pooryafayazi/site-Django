@@ -1,25 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming soon</title>
+    <title>Coming soon...</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            font-size: 36px;
-            color: #333;
-        }
+        body, html {margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        .full-page-image {
+            background-image: url("{% static 'img/comingsoon.jpg' %}");
+            background-size: cover; background-position: center; height: 100%; width: 100%; }
     </style>
 </head>
 <body>
-    <h1>Will be avaliable soon...</h1>
+    <div class="full-page-image"></div>
 </body>
 </html>
