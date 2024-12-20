@@ -14,23 +14,28 @@ def login_view(request):
             username_or_email = request.POST.get('username_or_email')
             password = request.POST.get('password')
             try:
-                user = User.objects.get(email=username_or_email)
-                username = user.username
+                user = User.objects.get(username=username_or_email)
             except User.DoesNotExist:
-                username = username_or_email
-            
-            user = authenticate(username=username, password=password)
+                try:
+                    user = User.objects.get(email=username_or_email)
+                except User.DoesNotExist:
+                    user = None
 
             if user is not None:
-                login(request, user)
-                messages.success(request, 'You have successfully logged in.')
-                return redirect('/')
+                user = authenticate(username=user.username, password=password)                
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, 'You have successfully logged in.')
+                    return redirect('/')
+                else:
+                    messages.error(request, 'Invalid username or password.')
             else:
                 messages.error(request, 'Invalid username or password.')
 
         form = AuthenticationForm()
         context = {'form': form}
         return render(request, 'accounts/login.html', context)
+
     else:
         return redirect('/')
 
